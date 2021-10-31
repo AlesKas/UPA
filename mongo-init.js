@@ -10,5 +10,3 @@ db.createUser({
       },
     ],
   });
-
-// TODO: insert data
