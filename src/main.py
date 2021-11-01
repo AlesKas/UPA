@@ -29,6 +29,10 @@ for csv_file in CSV_FILES:
     df['datum'] = pd.to_datetime(df["datum"])
     # Filter records
     df = df[df['datum'] >= filterDate]
+    # remove rows thats already inserted in db
+    if (list(column.find()) != []):
+        df = pd.concat([df,df.loc[df['datum'].isin(pd.DataFrame(list(column.find())).datum)]]).drop_duplicates(keep=False)
     df_data = df.to_dict('records')
     # Insert records to DB
-    column.insert_many(df_data)
+    if df_data != []:
+        column.insert_many(df_data)
