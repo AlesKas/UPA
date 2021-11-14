@@ -2,13 +2,14 @@ import pandas as pd
 from os import getenv
 from pymongo import MongoClient
 from datetime import timedelta, datetime
+import os 
 
 #Creating Mongo client
 MONGO_USER = getenv("MONGO_USERNAME")
 MONGO_PASSWD = getenv("MONGO_PASSWORD")
 MONGO_URI = getenv("MONGO_URI")
 CSV_URL = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/{}.csv"
-CSV_FILES = ["zakladni-prehled", "kraj-okres-testy"]
+CSV_FILES = ["zakladni-prehled", "kraj-okres-testy", "hospitalizace", "ockovani", "ockovani-umrti", "ockovani-zakladni-prehled", "osoby", "testy-pcr-antigenni", "umrti", "vyleceni"]
 CONNECTION_STRING = MONGO_URI.format(MONGO_USER, MONGO_PASSWD)
 
 client = MongoClient(CONNECTION_STRING)
@@ -36,3 +37,8 @@ for csv_file in CSV_FILES:
     # Insert records to DB
     if df_data != []:
         column.insert_many(df_data)
+
+#Run dotazy 
+os.system('python dotazA.py')
+os.system('python dotazB.py')
+os.system('vlastniDotaz.py')
