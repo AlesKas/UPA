@@ -111,6 +111,7 @@ axs[0].bar(position+width, df1['nakazeni_cz'], width, label='Počty nakažených
 axs[0].set_title('Nakažení', y=1.0, x = 0.0)
 axs[0].set_xticks(position)
 axs[0].set_xticklabels(months)
+axs[0].set_yscale('log', base=10)
 axs[0].legend()
 
 #Chart for Quater 2 - RECOVERY
@@ -121,6 +122,7 @@ axs[1].bar(position+width, df2['vyleceni_cz'], width, label='Počty vyléčenýc
 axs[1].set_title('Vyléčení', y=1.0, x = 0.0)
 axs[1].set_xticks(position)
 axs[1].set_xticklabels(months)
+axs[1].set_yscale('log', base=10)
 axs[1].legend()
 
 #Chart for Quater 3 - DEATH
@@ -131,6 +133,7 @@ axs[2].bar(position+width, df3['umrti_cz'], width, label='Počty zemřelých v C
 axs[2].set_title('Úmrtí', y=1.0, x = 0.0)
 axs[2].set_xticks(position)
 axs[2].set_xticklabels(months)
+axs[2].set_yscale('log', base=10)
 axs[2].legend()
 
 #Chart for Quater 4 - VACCINATION
@@ -141,6 +144,7 @@ axs[3].bar(position+width, df4['ockovani_cz'], width, label='Počty očkovaných
 axs[3].set_title('Očkovaní', y=1.0, x = 0.0)
 axs[3].set_xticks(position)
 axs[3].set_xticklabels(months)
+axs[3].set_yscale('log', base=10)
 axs[3].legend()
 
 plt.show()
