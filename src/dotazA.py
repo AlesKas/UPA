@@ -36,10 +36,9 @@ vaccination_0_24_arr = []
 vaccination_25_59_arr = []
 vaccination_60_arr = []
 
+years = ["2020-", "2021-"]
 # ###################################################################################################################   PART 1   ###################################################################################################################
-for year in range(2):
-    #Date extracting
-    year = '202' + str(year) + "-"
+for year in years:
     year_clear = year
 
     for month in range(12): 
@@ -144,7 +143,7 @@ for one_region in regions:
     vaccination_60_arr.append(vaccination_60_counter)
 
 #Chart plotting
-fig2, axs2 = plt.subplots(3, sharex=False, figsize=(15,10))
+fig2, axs2 = plt.subplots(3, sharex=False, sharey=True, figsize=(15,13))
 for ax in fig2.axes:
     ax.tick_params(axis='x', labelright=50, labelsize = 8)
 fig2.suptitle('Dotazy skupiny A - část II.', fontsize=20)

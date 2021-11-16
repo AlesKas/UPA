@@ -29,9 +29,8 @@ foreign_country_infection_dictionary = {}
 
 # ###################################################################################################################   PART 1   ###################################################################################################################
 # TOP 10 FOREIGN COUNTRIES WHERE INFECTION COME FROM
-for year in range(2):
-    #Date extracting
-    year = '202' + str(year) + "-"
+years = ["2020-", "2021-"]
+for year in years:
     year_clear = year
 
     for month in range(12): 
