@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 from os import getenv
 
-MONGO_USER = getenv("MONGO_USERNAME")
-MONGO_PASSWD = getenv("MONGO_PASSWORD")
-MONGO_URI = getenv("MONGO_URI")
+MONGO_USER = "user"
+MONGO_PASSWD = "passwd"
+MONGO_URI = "mongodb://{}:{}@localhost:10022/upa"
 CONNECTION_STRING = MONGO_URI.format(MONGO_USER, MONGO_PASSWD)
 
 client = MongoClient(CONNECTION_STRING)
@@ -70,10 +70,10 @@ for year in years:
         tests_arr.append(test_total_count)
         year = year_clear
         
-#print(infected_arr)
-#print(recovery_arr)
-#print(hospitalization_arr)
-#print(tests_arr)
+# print(infected_arr)
+# print(recovery_arr)
+# print(hospitalization_arr)
+# print(tests_arr)
 
 #Charts plotting
 plt.style.use('seaborn')
@@ -99,6 +99,7 @@ axs[1].plot(df2['datum'], df2['pocet provedenych testu'], marker='o', markerface
 axs[1].set_yscale('symlog')
 axs[1].legend()
 plt.show()
+plt.savefig('dotazA-1.png')
 
 # ###################################################################################################################   PART 2   ###################################################################################################################
 for one_region in regions:
@@ -182,3 +183,4 @@ axs2[2].set_xticks(position)
 axs2[2].set_xticklabels(regions_label)
 axs2[2].legend()
 plt.show()
+plt.savefig('dotazA-2.png')

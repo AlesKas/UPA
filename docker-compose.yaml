@@ -15,18 +15,5 @@ services:
       - mongodb_data_container:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
-  upa_app:
-    container_name: upa_app
-    links:
-      - mongodb
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    env_file:
-      - ./env/main.env
-    depends_on:
-      - mongodb
-    command: bash entrypoint.sh
-
 volumes:
   mongodb_data_container:

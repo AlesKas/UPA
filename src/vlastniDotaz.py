@@ -2,11 +2,10 @@ from pymongo import MongoClient
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from os import getenv
 
-MONGO_USER = getenv("MONGO_USERNAME")
-MONGO_PASSWD = getenv("MONGO_PASSWORD")
-MONGO_URI = getenv("MONGO_URI")
+MONGO_USER = "user"
+MONGO_PASSWD = "passwd"
+MONGO_URI = "mongodb://{}:{}@localhost:10022/upa"
 CONNECTION_STRING = MONGO_URI.format(MONGO_USER, MONGO_PASSWD)
 
 client = MongoClient(CONNECTION_STRING)
@@ -113,4 +112,4 @@ axs[1].set_title('Poměr počtú úmrtí na covid a na očkování', fontsize=20
 axs[1].legend()
 
 plt.show()
-
+plt.savefig('vlastni-dotaz.png')
