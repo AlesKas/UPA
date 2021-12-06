@@ -147,4 +147,4 @@ axs[3].set_yscale('log', base=10)
 axs[3].legend()
 
 plt.show()
-plt.savefig('dotazB.png')
+fig.savefig('dotazB.png')

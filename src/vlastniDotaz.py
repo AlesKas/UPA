@@ -112,4 +112,4 @@ axs[1].set_title('Poměr počtú úmrtí na covid a na očkování', fontsize=20
 axs[1].legend()
 
 plt.show()
-plt.savefig('vlastni-dotaz.png')
+fig.savefig('vlastni-dotaz.png')
