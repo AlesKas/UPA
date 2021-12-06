@@ -99,7 +99,7 @@ axs[1].plot(df2['datum'], df2['pocet provedenych testu'], marker='o', markerface
 axs[1].set_yscale('symlog')
 axs[1].legend()
 plt.show()
-plt.savefig('dotazA-1.png')
+fig.savefig('dotazA-1.png')
 
 # ###################################################################################################################   PART 2   ###################################################################################################################
 for one_region in regions:
@@ -183,4 +183,4 @@ axs2[2].set_xticks(position)
 axs2[2].set_xticklabels(regions_label)
 axs2[2].legend()
 plt.show()
-plt.savefig('dotazA-2.png')
+fig2.savefig('dotazA-2.png')
