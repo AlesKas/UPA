@@ -36,3 +36,10 @@ for csv_file in CSV_FILES:
     # Insert records to DB
     if df_data != []:
         column.insert_many(df_data)
+
+#Add kapacity-intenzivni-pece-zdravotnicke-zarizeni for vlastni dotaz
+capacity_url = 'https://dip.mzcr.cz/api/v1/kapacity-intenzivni-pece-zdravotnicke-zarizeni.csv'
+capacity_db = db['kapacity-intenzivni-pece-zdravotnicke-zarizeni']
+capacity_df = pd.read_csv(capacity_url)
+capacity_data = capacity_df.to_dict('records')
+capacity_db.insert_many(capacity_data, ordered=False)
