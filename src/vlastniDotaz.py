@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+from os import getenv
 
 MONGO_USER = "user"
 MONGO_PASSWD = "passwd"
@@ -13,17 +14,17 @@ client = MongoClient(CONNECTION_STRING)
 #Databaze and Collection initialization
 mydb = client["upa"]
 infected_db = mydb['osoby']
-death_db = mydb['umrti']
-death_vaccination_db = mydb['ockovani-umrti']
+capacity_db = mydb['kapacity-intenzivni-pece-zdravotnicke-zarizeni']
+hospitalization_db = mydb['hospitalizace']
 
 months = ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec" ]
 
 #Empty arrays for plotting data
-datum_arr = []
 infected_home_country_arr = []
 infected_foreign_country_arr = []
-death_covid_arr = []
-death_vaccination_arr = []
+upv_total_capacity_arr = []
+upv_hospitalization_capacity_arr = []
+year_arr = []
 foreign_country_infection_dictionary = {}
 
 # ###################################################################################################################   PART 1   ###################################################################################################################
@@ -57,7 +58,6 @@ for year in years:
         #Total count of infected - calculated according to records counts for each month
         infected_home_country_total_count = infected_db.count_documents({"datum":  {'$regex': year}}) - infection_foreign_country_total_count
 
-        datum_arr.append(year)
         infected_foreign_country_arr.append(infection_foreign_country_total_count)
         infected_home_country_arr.append(infected_home_country_total_count)
         year = year_clear
@@ -68,26 +68,27 @@ top_ten_foreign_counties = dict(list(foreign_country_infection_dictionary_sorted
 
 
 # ###################################################################################################################   PART 2   ###################################################################################################################
-# DEATH ON COVID vs DEATH after vaccination
+# UPV (UMELA PLICNI VENTILACE) CAPACITY
 for month in range(12): 
     #Date extracting
-    year = '2021-'
+    year = '2020-'
     if month + 1 < 10:
-        year += "0" + (str(month + 1))
+        year += "0" + (str(month + 1)) 
     else:
-        year += (str(month + 1))
+        year += (str(month + 1)) 
+    year_arr.append(year)
 
-    #Death on covid  - calculated according to records counts per month 
-    death_covid_total_count = death_db.count_documents({"datum":  {'$regex': year}})    
+    upv_total_capacity_per_month = capacity_db.find({"datum":  {'$regex': year}})
+    upv_total_capacity_count = 0
+    for upv in upv_total_capacity_per_month:
+        upv_total_capacity_count += upv['upv_kapacita_celkem'] 
+    upv_total_capacity_arr.append(upv_total_capacity_count)
 
-    #Death on vaccination  - calculated according to records counts per month 
-    death_vaccination = death_vaccination_db.find({"datum":  {'$regex': year}}) 
-    death_vaccination_total_count = 0
-    for o in death_vaccination:
-        death_vaccination_total_count += o['zemreli_dokoncene_ockovani']
-
-    death_covid_arr.append(death_covid_total_count)
-    death_vaccination_arr.append(death_vaccination_total_count)
+    hospitalization_upv_per_month = hospitalization_db.find({"datum":  {'$regex': year}})
+    hospitalization_upv_total_count = 0
+    for hos in hospitalization_upv_per_month:
+        hospitalization_upv_total_count += hos['upv']
+    upv_hospitalization_capacity_arr.append(hospitalization_upv_total_count)
 
 #Charts plotting
 plt.style.use('seaborn')
@@ -96,7 +97,8 @@ fig, axs = plt.subplots(2, figsize=(15,12))
 countries = list(top_ten_foreign_counties.keys())
 y_pos = np.arange(len(countries))
 countries_value = list(top_ten_foreign_counties.values())
-
+chart1 = {'zeme': countries, 'pocet nakazenych': countries_value}
+df1 = pd.DataFrame(chart1,columns=['zeme','pocet nakazenych'])
 axs[0].barh(y_pos, countries_value, align='center', color='darkblue')
 axs[0].set_yticks(y_pos)
 axs[0].set_yticklabels(countries)
@@ -104,12 +106,22 @@ axs[0].invert_yaxis()
 axs[0].set_xlabel('Počet nakažených')
 axs[0].set_title('TOP 10 zemí, kde se obyvatelé ČR nakazili', fontsize=20)
 
-chart2 = {'mesice': months, 'umrti covid': death_covid_arr, 'umrti ockovani': death_vaccination_arr}
-df2 = pd.DataFrame(chart2,columns=['mesice','umrti covid', 'umrti ockovani'])
-axs[1].plot(df2['mesice'], df2['umrti covid'],  marker='o', markerfacecolor='darkolivegreen', label='Počty úmrtí na covid', color='olive')
-axs[1].plot(df2['mesice'], df2['umrti ockovani'], marker='o', markerfacecolor='darkred', label='Počty úmrtí na očkování',  color='maroon', linewidth=3)
-axs[1].set_title('Poměr počtú úmrtí na covid a na očkování', fontsize=20)
+width = 0.2
+position = np.arange(len(year_arr))
+chart2 = {'mesice': months, 'upv celkova kapacita': upv_total_capacity_arr, 'upv hospitalizace': upv_hospitalization_capacity_arr}
+df2 = pd.DataFrame(chart2,columns=['mesice','upv celkova kapacita', 'upv hospitalizace'])
+axs[1].bar(position,df2['upv hospitalizace'], width, label='Obsazenost umělé plicní ventilaci',  color='deepskyblue', align='center')
+axs[1].bar(position+width, df2['upv celkova kapacita'], width, label='Celková kapacita umělé plicní ventilace', color='salmon', align='center')
+axs[1].set_title('Poměr mezi využitou a celkovou kapacitou umělé plicní ventilace', fontsize=20)
+axs[1].yaxis.get_major_formatter().set_scientific(False)
+axs[1].yaxis.get_major_formatter().set_useOffset(False)
+axs[1].set_xticks(position)
+axs[1].set_xticklabels(year_arr)
 axs[1].legend()
 
 plt.show()
 fig.savefig('vlastni-dotaz.png')
+
+#Export to CSV file
+df1.to_csv('Top_10_cizich_zemi_nakazy.csv', encoding='UTF-16')
+df2.to_csv('Pomer_mezi_vyuzitou_a_celkovou_kapacitou_upv.csv', encoding='UTF-16')
