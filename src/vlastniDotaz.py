@@ -119,4 +119,5 @@ axs[1].set_xticklabels(year_arr)
 axs[1].legend()
 
 plt.show()
+
 fig.savefig('vlastni-dotaz.png')

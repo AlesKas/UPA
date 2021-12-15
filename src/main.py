@@ -50,3 +50,4 @@ cities_db = db['mesta']
 cities_df = pd.read_csv(cities_url)
 cities_data = cities_df.to_dict('records')
 cities_db.insert_many(cities_data, ordered=False)
+
