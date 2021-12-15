@@ -151,16 +151,18 @@ fig2.suptitle('Dotazy skupiny A - část II.', fontsize=20)
 
 #Chart for total count of vaccination per region
 width = 0.2
-chart1 = {'kraje': regions_label, 'ockovani': vaccination_regions_arr}
+position = np.arange(len(regions))
+chart1 = {'kraje': regions, 'ockovani': vaccination_regions_arr}
 df3 = pd.DataFrame(chart1,columns=['kraje','ockovani'])
-axs2[0].bar(df3['kraje'], df3['ockovani'], width, label='Celkový počet očkování', color='indianred')
+axs2[0].bar(position, df3['ockovani'], width, label='Celkový počet očkování', color='indianred')
 axs2[0].yaxis.get_major_formatter().set_scientific(False)
 axs2[0].yaxis.get_major_formatter().set_useOffset(False)
+axs2[0].set_xticks(position)
+axs2[0].set_xticklabels(regions_label)
 axs2[0].legend()
 
 #Chart for counts of vaccinated women or man per region
-position = np.arange(len(regions))
-chart2 = {'kraje': regions_label, 'ockovani_muzi': vaccination_male_arr, 'ockovani_zeny': vaccination_female_arr}
+chart2 = {'kraje': regions, 'ockovani_muzi': vaccination_male_arr, 'ockovani_zeny': vaccination_female_arr}
 df4 = pd.DataFrame(chart2,columns=['kraje','ockovani_muzi', 'ockovani_zeny'])
 axs2[1].bar(position, df4['ockovani_muzi'], width, label='Počty očkovaných mužů', color='aquamarine', align='center')
 axs2[1].bar(position+width, df4['ockovani_zeny'], width, label='Počty očkovaných žen', color='orange', align='center')
@@ -172,7 +174,7 @@ axs2[1].legend()
 
 #Chart for total count of vaccination per region
 width2 = 0.2
-chart3 = {'kraje': regions_label, 'ockovani_do_24': vaccination_0_24_arr, 'ockovani_24_59': vaccination_25_59_arr, 'ockovani_nad_59': vaccination_60_arr}
+chart3 = {'kraje': regions, 'ockovani_do_24': vaccination_0_24_arr, 'ockovani_24_59': vaccination_25_59_arr, 'ockovani_nad_59': vaccination_60_arr}
 df5 = pd.DataFrame(chart3,columns=['kraje','ockovani_do_24', 'ockovani_24_59', 'ockovani_nad_59'])
 axs2[2].bar(position-width2, df5['ockovani_do_24'], width2, label='Počty očkovaných do 24 let', color='lightcoral', align='center')
 axs2[2].bar(position, df5['ockovani_24_59'], width2, label='Počty očkovaných mezi 25 - 59', color='gold', align='center')
@@ -184,3 +186,10 @@ axs2[2].set_xticklabels(regions_label)
 axs2[2].legend()
 plt.show()
 fig2.savefig('dotazA-2.png')
+
+#Export to CSV file
+df1.to_csv('Pocty_nakazenych_vylecenych_hospitalizovanych.csv', encoding='UTF-16')
+df2.to_csv('Pocty_provedenych_testu.csv', encoding='UTF-16')
+df3.to_csv('Celkovy_pocet_ockovani_dle_kraju.csv', encoding='UTF-16')
+df4.to_csv('Pocty_ockovani_dle_pohlavi_a_kraju.csv', encoding='UTF-16')
+df5.to_csv('Pocty_ockovani_dle_veku_a_kraju.csv', encoding='UTF-16')

@@ -115,7 +115,7 @@ axs[0].legend()
 
 #Chart for Quater 2 - RECOVERY
 chart2 = {'mesice': months, 'vyleceni_jmr': jmr_recovery_arr, 'vyleceni_cz': cz_recovery_arr}
-df2 = pd.DataFrame(chart2,columns=['kraje','vyleceni_jmr', 'vyleceni_cz'])
+df2 = pd.DataFrame(chart2,columns=['mesice','vyleceni_jmr', 'vyleceni_cz'])
 axs[1].bar(position, df2['vyleceni_jmr'], width, label='Počty vyléčených v JMR', color='plum', align='center')
 axs[1].bar(position+width, df2['vyleceni_cz'], width, label='Počty vyléčených v CZ', color='darkslategray', align='center')
 axs[1].set_title('Vyléčení', y=1.0, x = 0.0)
@@ -126,7 +126,7 @@ axs[1].legend()
 
 #Chart for Quater 3 - DEATH
 chart3 = {'mesice': months, 'umrti_jmr': jmr_death_arr, 'umrti_cz': cz_death_arr}
-df3 = pd.DataFrame(chart3,columns=['kraje', 'umrti_jmr', 'umrti_cz'])
+df3 = pd.DataFrame(chart3,columns=['mesice', 'umrti_jmr', 'umrti_cz'])
 axs[2].bar(position, df3['umrti_jmr'], width, label='Počty zemřelých v JMR', color='plum', align='center')
 axs[2].bar(position+width, df3['umrti_cz'], width, label='Počty zemřelých v CZ', color='darkslategray', align='center')
 axs[2].set_title('Úmrtí', y=1.0, x = 0.0)
@@ -137,7 +137,7 @@ axs[2].legend()
 
 #Chart for Quater 4 - VACCINATION
 chart4 = {'mesice': months, 'ockovani_jmr': jmr_vaccination_arr, 'ockovani_cz': cz_vaccination_arr}
-df4 = pd.DataFrame(chart4,columns=['kraje', 'ockovani_jmr', 'ockovani_cz'])
+df4 = pd.DataFrame(chart4,columns=['mesice', 'ockovani_jmr', 'ockovani_cz'])
 axs[3].bar(position, df4['ockovani_jmr'], width, label='Počty očkovaných v JMR', color='plum', align='center')
 axs[3].bar(position+width, df4['ockovani_cz'], width, label='Počty očkovaných v CZ', color='darkslategray', align='center')
 axs[3].set_title('Očkovaní', y=1.0, x = 0.0)
@@ -148,3 +148,9 @@ axs[3].legend()
 
 plt.show()
 fig.savefig('dotazB.png')
+
+#Export to CSV file
+df1.to_csv('Pocty_nakazenych_JMR.csv', encoding='UTF-16')
+df2.to_csv('Pocty_vylecenych_JMR.csv', encoding='UTF-16')
+df3.to_csv('Pocty_umrti_JMR.csv', encoding='UTF-16')
+df4.to_csv('Pocty_ockovani_JMR.csv', encoding='UTF-16')
