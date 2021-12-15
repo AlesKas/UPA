@@ -7,7 +7,7 @@ MONGO_USER = "user"
 MONGO_PASSWD = "passwd"
 MONGO_URI = "mongodb://{}:{}@localhost:10022/upa"
 CSV_URL = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/{}.csv"
-CSV_FILES = ["zakladni-prehled", "kraj-okres-testy", "hospitalizace", "ockovani", "ockovani-umrti", "ockovani-zakladni-prehled", "osoby", "testy-pcr-antigenni", "umrti", "vyleceni"]
+CSV_FILES = ["zakladni-prehled", "kraj-okres-testy", "hospitalizace", "ockovani", "ockovani-umrti", "ockovani-zakladni-prehled", "osoby", "testy-pcr-antigenni", "umrti", "vyleceni", "obce", "ockovani-geografie"]
 CONNECTION_STRING = MONGO_URI.format(MONGO_USER, MONGO_PASSWD)
 
 client = MongoClient(CONNECTION_STRING)
@@ -36,3 +36,17 @@ for csv_file in CSV_FILES:
     # Insert records to DB
     if df_data != []:
         column.insert_many(df_data)
+
+#Add kapacity-intenzivni-pece-zdravotnicke-zarizeni for vlastni dotaz
+capacity_url = 'https://dip.mzcr.cz/api/v1/kapacity-intenzivni-pece-zdravotnicke-zarizeni.csv'
+capacity_db = db['kapacity-intenzivni-pece-zdravotnicke-zarizeni']
+capacity_df = pd.read_csv(capacity_url)
+capacity_data = capacity_df.to_dict('records')
+capacity_db.insert_many(capacity_data, ordered=False)
+
+#Add mesta for dotaz C
+cities_url = 'https://www.czso.cz/documents/62353418/143522504/130142-21data043021.csv/760fab9c-d079-4d3a-afed-59cbb639e37d?version=1.1'
+cities_db = db['mesta']
+cities_df = pd.read_csv(cities_url)
+cities_data = cities_df.to_dict('records')
+cities_db.insert_many(cities_data, ordered=False)
