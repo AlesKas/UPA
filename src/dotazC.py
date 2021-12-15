@@ -129,11 +129,3 @@ chart = {'mesta': cities_arr, 'pocet obyvatel 0-14 let': age_0_14_arr, 'pocet ob
 df = pd.DataFrame(chart,columns=['mesta','pocet obyvatel 0-14 let', 'pocet obyvatel 15-59 let', 'pocet obyvatel 60+', 'pocet nakazenych za posledni 4 mesice', 'pocet ockovani za posledni 4 mesice'])
 df.to_csv('Mesta_dolovani.csv', encoding='UTF-16')
 
-print(cities_arr)
-print(age_0_14_arr)
-print(age_15_59_arr)
-print(age_60_plus_arr)
-print(infection_arr)
-print(vaccination_arr)
-
-

@@ -1,5 +1,4 @@
 # Ukládání a příprava dat COVID - 19
-1 část
 
 ## Autoři
 - xkrizo03 Hana Křížová  
