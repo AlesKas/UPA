@@ -50,7 +50,7 @@ grafy jsou vykreslovány do složky `dotazy-png` a vytvářejí je scripty:
 `dotazB-plot.py` pro dotaz B
 `vlastniDotaz-plot.py` pro dotaz C
 
-celkově lze grafy vykreslit pomocí příkazu `plot_query.sh`, který provede sérii příkazů:
+celkově lze grafy vykreslit pomocí příkazu `plot_queries.sh`, který provede sérii příkazů:
 
 ```
 cd src/
