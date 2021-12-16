@@ -25,10 +25,10 @@ cd ..
 ```
 
 ### extrakce dat z DB do csv souboru
-extrakce je provedena ve scriptech
-`dotazA-prepare.py` pro dotazy A
-`dotazB-prepare.py` pro dotaz B
-`vlastniDotaz-prepare.py` pro dotaz C
+extrakce je provedena ve scriptech<br>
+`dotazA-prepare.py` pro dotazy A<br>
+`dotazB-prepare.py` pro dotaz B<br>
+`vlastniDotaz-prepare.py` pro dotaz C<br>
 `dotazC.py` pro dotaz typu C spolu s extrakci dat pro dolovani
 
 veškeré csv soubory jsou následně uloženy do složky `csv`
@@ -45,9 +45,9 @@ cd ..
 ```
 
 ### vykreslení grafů
-grafy jsou vykreslovány do složky `dotazy-png` a vytvářejí je scripty:
-`dotazA-plot.py` pro dotazy A
-`dotazB-plot.py` pro dotaz B
+grafy jsou vykreslovány do složky `dotazy-png` a vytvářejí je scripty:<br>
+`dotazA-plot.py` pro dotazy A<br>
+`dotazB-plot.py` pro dotaz B<br>
 `vlastniDotaz-plot.py` pro dotaz C
 
 celkově lze grafy vykreslit pomocí příkazu `plot_queries.sh`, který provede sérii příkazů:
