@@ -1,3 +1,3 @@
-./feed_db.sh
-./extract_data.sh
-./plot_query.sh
+sh feed_db.sh
+sh extract_data.sh
+sh plot_query.sh
