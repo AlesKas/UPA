@@ -127,4 +127,4 @@ for city in cities_arr:
 #Export to CSV file
 chart = {'mesta': cities_arr, 'pocet obyvatel 0-14 let': age_0_14_arr, 'pocet obyvatel 15-59 let': age_15_59_arr, 'pocet obyvatel 60+': age_60_plus_arr, 'pocet nakazenych za posledni 4 ctvrtleti': infection_arr, 'pocet ockovani za posledni 4 ctvrtleti': vaccination_arr}
 df = pd.DataFrame(chart,columns=['mesta','pocet obyvatel 0-14 let', 'pocet obyvatel 15-59 let', 'pocet obyvatel 60+', 'pocet nakazenych za posledni 4 ctvrtleti', 'pocet ockovani za posledni 4 ctvrtleti'])
-df.to_csv('Mesta_dolovani.csv', encoding='UTF-16')
+df.to_csv('../csv/Mesta_dolovani.csv', encoding='UTF-16')
