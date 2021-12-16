@@ -60,4 +60,5 @@ python3 vlastniDotaz_plot.py
 cd ..
 ```
 
-více informací v doc.pdf 
+více informací o fungování dotazů v `doc.pdf`
+informace o csv souborech v `popis_struktury_csv.pdf` 
