@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 #load data from csv
 df1 = pd.read_csv('../csv/Pocty_nakazenych_vylecenych_hospitalizovanych.csv', encoding='UTF-16')
@@ -37,7 +38,7 @@ axs[1].plot(df2['datum'], df2['pocet provedenych testu'], marker='o', markerface
 axs[1].set_yscale('symlog')
 axs[1].legend()
 plt.show()
-fig.savefig('dotazA-1.png')
+fig.savefig('../dotazy-png/dotazA-1.png')
 
 
 #part 2
@@ -83,4 +84,4 @@ axs2[2].set_xticks(position)
 axs2[2].set_xticklabels(regions_label)
 axs2[2].legend()
 plt.show()
-fig2.savefig('dotazA-2.png')
+fig2.savefig('../dotazy-png/dotazA-2.png')

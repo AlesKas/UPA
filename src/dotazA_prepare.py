@@ -1,7 +1,5 @@
 from pymongo import MongoClient
 import pandas as pd
-import numpy as np
-from os import getenv
 
 MONGO_USER = "user"
 MONGO_PASSWD = "passwd"
