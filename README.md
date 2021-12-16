@@ -61,4 +61,5 @@ cd ..
 ```
 
 více informací o fungování dotazů v `doc.pdf`
+
 informace o csv souborech v `popis_struktury_csv.pdf` 
