@@ -1,8 +1,6 @@
 from pymongo import MongoClient
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from os import getenv
 
 MONGO_USER = "user"
 MONGO_PASSWD = "passwd"
@@ -98,43 +96,16 @@ for month in range(12):
         hospitalization_upv_total_count += hos['upv']
     upv_hospitalization_capacity_arr.append(hospitalization_upv_total_count)
 
-#Charts plotting
-plt.style.use('seaborn')
-fig, axs = plt.subplots(2, figsize=(15, 12))
-
 countries = list(top_ten_foreign_counties.keys())
 y_pos = np.arange(len(countries))
 countries_value = list(top_ten_foreign_counties.values())
 chart1 = {'zeme': countries, 'pocet nakazenych': countries_value}
 df1 = pd.DataFrame(chart1, columns=['zeme', 'pocet nakazenych'])
-axs[0].barh(y_pos, countries_value, align='center', color='darkblue')
-axs[0].set_yticks(y_pos)
-axs[0].set_yticklabels(countries)
-axs[0].invert_yaxis()
-axs[0].set_xlabel('Počet nakažených')
-axs[0].set_title('TOP 10 zemí, kde se obyvatelé ČR nakazili', fontsize=20)
-
-width = 0.2
-position = np.arange(len(year_arr))
 chart2 = {'mesice': months, 'upv celkova kapacita': upv_total_capacity_arr,
           'upv hospitalizace': upv_hospitalization_capacity_arr}
 df2 = pd.DataFrame(
     chart2, columns=['mesice', 'upv celkova kapacita', 'upv hospitalizace'])
-axs[1].bar(position, df2['upv hospitalizace'], width,
-           label='Obsazenost umělé plicní ventilaci',  color='deepskyblue', align='center')
-axs[1].bar(position+width, df2['upv celkova kapacita'], width,
-           label='Celková kapacita umělé plicní ventilace', color='salmon', align='center')
-axs[1].set_title(
-    'Poměr mezi využitou a celkovou kapacitou umělé plicní ventilace', fontsize=20)
-axs[1].yaxis.get_major_formatter().set_scientific(False)
-axs[1].yaxis.get_major_formatter().set_useOffset(False)
-axs[1].set_xticks(position)
-axs[1].set_xticklabels(year_arr)
-axs[1].legend()
-
-plt.show()
-fig.savefig('vlastni-dotaz.png')
 
 #Export to CSV file
-df1.to_csv('Top_10_cizich_zemi_nakazy.csv', encoding='UTF-16')
-df2.to_csv('Pomer_mezi_vyuzitou_a_celkovou_kapacitou_upv.csv', encoding='UTF-16')
+df1.to_csv('../csv/Top_10_cizich_zemi_nakazy.csv', encoding='UTF-16')
+df2.to_csv('../csv/Pomer_mezi_vyuzitou_a_celkovou_kapacitou_upv.csv', encoding='UTF-16')
