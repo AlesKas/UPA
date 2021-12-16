@@ -1,7 +1,5 @@
 from pymongo import MongoClient
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 
 MONGO_USER = "user"
 MONGO_PASSWD = "passwd"
